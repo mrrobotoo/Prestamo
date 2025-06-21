@@ -1,0 +1,137 @@
+swagger: "2.0"
+info:
+  title: Préstamo CRUD API
+  description: API for managing loans and calculating interest
+  version: 1.0.0
+host: localhost:8080
+basePath: /api
+schemes:
+  - http
+paths:
+  /prestamos:
+    get:
+      summary: Get all active loans
+      produces:
+        - application/json
+      responses:
+        200:
+          description: List of active loans
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Prestamo'
+    post:
+      summary: Create a new loan
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: prestamo
+          required: true
+          schema:
+            $ref: '#/definitions/Prestamo'
+      responses:
+        201:
+          description: Loan created
+          schema:
+            $ref: '#/definitions/Prestamo'
+  /prestamos/{id}:
+    get:
+      summary: Get loan by ID
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+      responses:
+        200:
+          description: Loan found
+          schema:
+            $ref: '#/definitions/Prestamo'
+        404:
+          description: Loan not found
+    put:
+      summary: Update loan
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+        - in: body
+          name: prestamo
+          required: true
+          schema:
+            $ref: '#/definitions/Prestamo'
+      responses:
+        200:
+          description: Loan updated
+          schema:
+            $ref: '#/definitions/Prestamo'
+        404:
+          description: Loan not found
+    delete:
+      summary: Delete loan
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+      responses:
+        204:
+          description: Loan deleted
+        404:
+          description: Loan not found
+  /prestamos/{id}/total:
+    get:
+      summary: Calculate total amount with interest
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+      responses:
+        200:
+          description: Total amount calculated
+          schema:
+            type: object
+            properties:
+              total:
+                type: number
+                format: double
+        404:
+          description: Loan or client not found
+definitions:
+  Prestamo:
+    type: object
+    properties:
+      id:
+        type: string
+      monto:
+        type: number
+        format: double
+      clienteId:
+        type: string
+      fecha:
+        type: string
+        format: date
+      estado:
+        type: string
+        enum: [PENDIENTE, PAGADO]
+  Cliente:
+    type: object
+    properties:
+      id:
+        type: string
+      tipoCliente:
+        type: string
+        enum: [REGULAR, VIP]
