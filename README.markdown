@@ -107,7 +107,6 @@ mvn test
 
 ## Solución de problemas
 - **Error de dependencias**: Asegúrate de que el `pom.xml` incluye todas las dependencias necesarias y ejecuta `mvn clean install`.
-- **Bean no encontrado**: Verifica que todos los componentes estén anotados con `@Repository`, `@Service`, o `@Controller` y estén en el paquete correcto (`com.example.prestamo.*`).
-- **API no responde**: Confirma que el puerto `8080` está libre.
+- **API no responde**: Confirma que el puerto `8085` está libre.
 
 Para más detalles, consulta el contrato OpenAPI en `openapi.yaml` o contacta al desarrollador.
